@@ -1,8 +1,6 @@
 package com.task.weathernowlater.di
 
-import com.task.weathernowlater.data.WeatherApi
-import com.task.weathernowlater.data.WeatherRepository
-import com.task.weathernowlater.data.WeatherRepositoryImpl
+import com.task.data.remote.api.WeatherApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +13,10 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideWeatherApi(retrofit: Retrofit): WeatherApi =
-        retrofit.create(WeatherApi::class.java)
+    fun provideWeatherApi(retrofit: Retrofit): WeatherApiService =
+        retrofit.create(WeatherApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideWeatherRepository(api: WeatherApi): WeatherRepository =
-        WeatherRepositoryImpl(api)
-} 
+}
+
+
+

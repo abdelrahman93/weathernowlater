@@ -6,17 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.task.weathernowlater.cityinput.presentation.CityInputScreen
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.task.features.cityinput.presentation.CityInputScreen
 import com.task.weathernowlater.cityweather.CityWeatherScreen
-import com.task.weathernowlater.splash.presentation.SplashScreen
-import com.task.weathernowlater.ui.theme.WeathernowlaterTheme
+import com.task.data.model.CityWeather
+import com.task.features.presentation.SplashScreen
+import com.task.features.presentation.weatherdetails.CityWeatherViewModel
+import com.task.features.presentation.forecast.ForecastScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()
+    val cityWeatherViewModel: CityWeatherViewModel = hiltViewModel()
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(onNavigateNext = {
@@ -47,30 +48,24 @@ fun AppNavHost() {
         }
         composable("city_input") {
             CityInputScreen(
-                onNavigateToDetails = { city ->
-                    navController.navigate("city_weather/$city")
+                onNavigateToDetails = { cityWeather: CityWeather ->
+                    cityWeatherViewModel.cityWeather = cityWeather
+                    navController.navigate("city_weather")
                 }
             )
         }
-        composable("city_weather/{city}") { backStackEntry ->
-            val city = backStackEntry.arguments?.getString("city") ?: ""
-            CityWeatherScreen(city = city)
+        composable("city_weather") {
+            cityWeatherViewModel.cityWeather?.let { cityWeather ->
+                CityWeatherScreen(
+                    cityWeather,
+                    onBack = { navController.popBackStack() },
+                    onForecastClick = { navController.navigate("forecast/${cityWeather.name}") }
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeathernowlaterTheme {
-        Greeting("Android")
+        composable("forecast/{city}") { backStackEntry ->
+            val city = backStackEntry.arguments?.getString("city") ?: ""
+            ForecastScreen(city = city, onBack = { navController.popBackStack() })
+        }
     }
 }
