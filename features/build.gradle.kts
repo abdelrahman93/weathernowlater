@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("dagger.hilt.android.plugin")
@@ -7,17 +7,14 @@ plugins {
 }
 
 android {
-    namespace = "com.task.weathernowlater"
+    namespace = "com.task.features"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.task.weathernowlater"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,12 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
+
+    // Modules
+    implementation(project(":core"))
+    implementation(project(":data"))
 
     // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
@@ -62,27 +60,9 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.hilt.navigation.compose)
 
-    // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
-
     // Dependency Injection (Hilt)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-
-
-    // Coroutines
-    implementation(libs.coroutines)
-
-    // Core Module
-    implementation(project(":core"))
-    implementation(project(":features"))
-    implementation(project(":data"))
-
-
 
     // Unit Testing
     testImplementation(libs.junit)
@@ -90,15 +70,21 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
 
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+
+
     // Android Instrumentation Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-}
-
-configurations.all {
-    resolutionStrategy {
-        force("com.squareup:javapoet:1.13.0")
-    }
 }
