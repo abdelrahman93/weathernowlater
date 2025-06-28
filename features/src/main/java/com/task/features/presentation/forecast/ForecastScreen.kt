@@ -24,12 +24,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import com.task.core.common.DarkBlue
 import com.task.core.common.PlaceholderTextColor
-import com.task.core.common.PrimaryDark
-import com.task.core.common.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,17 +50,17 @@ fun ForecastScreen(
     }
 
     Scaffold(
-        containerColor = PrimaryDark,
+        containerColor = MaterialTheme.colorScheme.primary,
         topBar = {
             TopAppBar(
-                title = { Text("6-DAY FORECAST", color = Color.White) },
+                title = { Text("6-DAY FORECAST", color = MaterialTheme.colorScheme.tertiary) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.tertiary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = PrimaryDark
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -72,24 +68,24 @@ fun ForecastScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(PrimaryDark)
+                .background(MaterialTheme.colorScheme.primary)
                 .padding(padding)
         ) {
             when {
                 state.isLoading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center),
-                        color = White
+                        color = MaterialTheme.colorScheme.tertiary
                     )
                 }
                 state.error != null -> {
-                    Text("Error: ${state.error}", modifier = Modifier.align(Alignment.Center), color = Color.White)
+                    Text("Error: ${state.error}", modifier = Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.tertiary)
                 }
                 else -> {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(PrimaryDark),
+                            .background(MaterialTheme.colorScheme.primary),
                         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 0.dp),
                         verticalArrangement = Arrangement.spacedBy(0.dp)
                     ) {
@@ -97,7 +93,7 @@ fun ForecastScreen(
                             ForecastDayRow(day)
                             if (day != state.forecast.last()) {
                                 Divider(
-                                    color = DarkBlue,
+                                    color = PlaceholderTextColor,
                                     thickness = 1.dp,
                                     modifier = Modifier.padding(vertical = 8.dp)
                                 )
@@ -118,7 +114,7 @@ fun ForecastDayRow(day: ForecastDay) {
     ) {
         Text(
             text = day.date,
-            color = PlaceholderTextColor,
+            color = MaterialTheme.colorScheme.tertiary,
             fontSize = 18.sp,
             modifier = Modifier.weight(1.2f)
         )
@@ -130,14 +126,14 @@ fun ForecastDayRow(day: ForecastDay) {
         Text(
             text = day.description,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.tertiary,
             fontSize = 18.sp,
             modifier = Modifier.weight(1.5f)
         )
         Text(
             text = day.maxTemp,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.tertiary,
             fontSize = 18.sp,
             modifier = Modifier.weight(1f)
         )

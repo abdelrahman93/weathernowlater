@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -12,11 +11,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.task.features.cityinput.presentation.CityInputScreen
-import com.task.weathernowlater.cityweather.CityWeatherScreen
+import com.task.features.presentation.weatherdetails.CityWeatherScreen
 import com.task.data.model.CityWeather
 import com.task.features.presentation.SplashScreen
 import com.task.features.presentation.weatherdetails.CityWeatherViewModel
 import com.task.features.presentation.forecast.ForecastScreen
+import com.task.features.theme.WeathernowlaterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MaterialTheme {
+            WeathernowlaterTheme(dynamicColor = false) {
                 Surface {
                     AppNavHost()
                 }

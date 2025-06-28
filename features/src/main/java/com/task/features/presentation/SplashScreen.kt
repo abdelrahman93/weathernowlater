@@ -15,14 +15,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.task.features.R
-import com.task.core.common.PrimaryDark
 
 @Composable
 fun SplashScreen(onNavigateNext: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(PrimaryDark),
+            .background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -43,7 +42,7 @@ fun SplashScreen(onNavigateNext: () -> Unit) {
                 text = "Weather",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.tertiary,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(8.dp))
