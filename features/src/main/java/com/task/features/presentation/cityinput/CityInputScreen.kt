@@ -69,13 +69,13 @@ fun CityInputScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = PrimaryDark
+        containerColor = MaterialTheme.colorScheme.primary
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(PrimaryDark)
+                .background(MaterialTheme.colorScheme.primary)
                 .padding(24.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
@@ -84,7 +84,7 @@ fun CityInputScreen(
                 text = "My Cities",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                color = White
+                color = MaterialTheme.colorScheme.tertiary
             )
             Spacer(modifier = Modifier.height(24.dp))
             TextField(

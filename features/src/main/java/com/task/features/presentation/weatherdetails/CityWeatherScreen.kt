@@ -1,4 +1,4 @@
-package com.task.weathernowlater.cityweather
+package com.task.features.presentation.weatherdetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,21 +25,21 @@ import com.task.core.common.PrimaryDark
 @Composable
 fun CityWeatherScreen(cityWeather: CityWeather, onBack: (() -> Unit)? = null, onForecastClick: (() -> Unit)? = null) {
     Scaffold(
-        containerColor = PrimaryDark,
+        containerColor = MaterialTheme.colorScheme.primary,
         topBar = {
             TopAppBar(
-                title = { Text("Air Conditions", color = Color.White) },
+                title = { Text("Air Conditions", color = MaterialTheme.colorScheme.tertiary) },
                 navigationIcon = {
                     IconButton(onClick = { onBack?.invoke() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.tertiary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = PrimaryDark
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }
@@ -47,7 +47,7 @@ fun CityWeatherScreen(cityWeather: CityWeather, onBack: (() -> Unit)? = null, on
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(PrimaryDark)
+                .background(MaterialTheme.colorScheme.primary)
                 .padding(padding)
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -57,7 +57,7 @@ fun CityWeatherScreen(cityWeather: CityWeather, onBack: (() -> Unit)? = null, on
                 text = cityWeather.name,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.tertiary
             )
 
             // Weather Icon
@@ -80,7 +80,7 @@ fun CityWeatherScreen(cityWeather: CityWeather, onBack: (() -> Unit)? = null, on
                 text = "${cityWeather.temperature.toInt()}°",
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.tertiary
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
